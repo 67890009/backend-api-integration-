@@ -16,5 +16,6 @@ async def root():
         result = await session.execute(text("SELECT 1"))
 
     return {
-        "database": result.scalar()
+        "database": result.scalar(),
+        "jwt_algorithm": settings.JWT_ALGORITHM,
     }
