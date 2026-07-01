@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 from sqlalchemy import text
-
+from app.auth.router import router as auth_router
+from app.core.config import settings
 from app.db.session import AsyncSessionLocal
-
+import app.db.model
 app = FastAPI()
 
-
+app.include_router(auth_router)
 @app.get("/")
 async def root():
 
