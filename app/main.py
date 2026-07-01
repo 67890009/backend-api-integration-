@@ -1,12 +1,23 @@
 from fastapi import FastAPI
+from sqlalchemy import text
 
-app = FastAPI(
-    title="Employee Leave Management System",
-    version="1.0.0",
-)
+from app.auth.router import router as auth_router
+from app.core.config import settings
+from app.db.session import AsyncSessionLocal
+import app.db.models
+
+app = FastAPI()
+
+app.include_router(auth_router)
+
 
 @app.get("/")
 async def root():
+
+    async with AsyncSessionLocal() as session:
+        result = await session.execute(text("SELECT 1"))
+
     return {
-        "message": "Employee Leave Management System API"
+        "database": result.scalar(),
+        "jwt_algorithm": settings.JWT_ALGORITHM,
     }
