@@ -5,10 +5,12 @@ from app.auth.router import router as auth_router
 from app.core.config import settings
 from app.db.session import AsyncSessionLocal
 import app.db.model
+from app.users.router import router as users_router
 app = FastAPI()
 
 app.include_router(leave_type_router)
 app.include_router(auth_router)
+app.include_router(users_router)
 @app.get("/")
 async def root():
 
